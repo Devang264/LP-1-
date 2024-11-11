@@ -1,0 +1,16 @@
+//IRSENSOR
+
+int IRSensor = 2;
+int LED = 13;
+
+void setup() {
+    pinMode(IRSensor, INPUT);
+    pinMode(LED, OUTPUT);
+}
+
+void loop() {
+    if (digitalRead(IRSensor) == HIGH)
+        digitalWrite(LED, LOW);
+    else
+        digitalWrite(LED, HIGH);
+}
