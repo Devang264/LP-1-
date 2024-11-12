@@ -1,0 +1,135 @@
+### Definitions:
+
+1. **Burst Time**: 
+   - **Definition**: Burst time refers to the amount of time a process requires to execute on the CPU. It is also called **execution time** or **CPU burst time**.
+   - **Example**: If a process requires 5 units of time to complete its task on the CPU, its burst time is 5.
+
+2. **Arrival Time**:
+   - **Definition**: Arrival time refers to the time at which a process arrives in the ready queue and is ready to be executed.
+   - **Example**: If a process arrives at time unit 2, its arrival time is 2.
+
+3. **Completion Time (CT)**:
+   - **Definition**: Completion time refers to the time at which a process finishes its execution. It is calculated based on the order in which processes are executed.
+   - **Formula**: For a non-preemptive scheduling algorithm (e.g., FCFS), the completion time of a process is the sum of its arrival time and burst time, considering the previous process’s completion time.
+   - **Formula for Completion Time (CT)**:
+     \[
+     \text{Completion Time} (CT) = \text{Start Time} + \text{Burst Time}
+     \]
+     where Start Time is the time when the process starts executing.
+
+4. **Turnaround Time (TAT)**:
+   - **Definition**: Turnaround time refers to the total time taken by a process from its arrival to completion.
+   - **Formula**: 
+     \[
+     \text{Turnaround Time} (TAT) = \text{Completion Time} - \text{Arrival Time}
+     \]
+     or
+     \[
+     \text{Turnaround Time} (TAT) = \text{Waiting Time} + \text{Burst Time}
+     \]
+     Turnaround time gives you the entire time a process spends from the moment it arrives in the queue to the moment it finishes execution.
+
+5. **Waiting Time (WT)**:
+   - **Definition**: Waiting time is the amount of time a process spends waiting in the ready queue before it gets CPU time to execute. It excludes the time spent executing on the CPU.
+   - **Formula**:
+     \[
+     \text{Waiting Time} (WT) = \text{Turnaround Time} - \text{Burst Time}
+     \]
+     or
+     \[
+     \text{Waiting Time} (WT) = \text{Start Time} - \text{Arrival Time}
+     \]
+
+---
+
+### Calculation Example:
+
+Let's assume we have 3 processes with the following information:
+
+| Process | Arrival Time (AT) | Burst Time (BT) |
+|---------|-------------------|-----------------|
+| P1      | 0                 | 5               |
+| P2      | 1                 | 3               |
+| P3      | 2                 | 8               |
+
+Now, let’s calculate the **Completion Time**, **Waiting Time**, and **Turnaround Time** for each process using **FCFS (First-Come, First-Served)** scheduling.
+
+1. **First, Calculate Completion Time (CT):**
+   - **P1** arrives at time 0 and executes for 5 units of time.
+     \[
+     CT_P1 = 0 + 5 = 5
+     \]
+   - **P2** arrives at time 1, but since **P1** is still executing, **P2** starts at **time 5**.
+     \[
+     CT_P2 = 5 + 3 = 8
+     \]
+   - **P3** arrives at time 2, but since both **P1** and **P2** are executing before it, it starts at **time 8**.
+     \[
+     CT_P3 = 8 + 8 = 16
+     \]
+
+2. **Next, Calculate Turnaround Time (TAT):**
+   - **P1**: 
+     \[
+     TAT_P1 = CT_P1 - AT_P1 = 5 - 0 = 5
+     \]
+   - **P2**:
+     \[
+     TAT_P2 = CT_P2 - AT_P2 = 8 - 1 = 7
+     \]
+   - **P3**:
+     \[
+     TAT_P3 = CT_P3 - AT_P3 = 16 - 2 = 14
+     \]
+
+3. **Finally, Calculate Waiting Time (WT):**
+   - **P1**:
+     \[
+     WT_P1 = TAT_P1 - BT_P1 = 5 - 5 = 0
+     \]
+   - **P2**:
+     \[
+     WT_P2 = TAT_P2 - BT_P2 = 7 - 3 = 4
+     \]
+   - **P3**:
+     \[
+     WT_P3 = TAT_P3 - BT_P3 = 14 - 8 = 6
+     \]
+
+---
+
+### Results for Each Process:
+
+| Process | Arrival Time (AT) | Burst Time (BT) | Completion Time (CT) | Turnaround Time (TAT) | Waiting Time (WT) |
+|---------|-------------------|-----------------|----------------------|-----------------------|-------------------|
+| P1      | 0                 | 5               | 5                    | 5                     | 0                 |
+| P2      | 1                 | 3               | 8                    | 7                     | 4                 |
+| P3      | 2                 | 8               | 16                   | 14                    | 6                 |
+
+---
+
+### **Average Waiting Time**:
+To calculate the **average waiting time**, we sum up the waiting times of all processes and divide by the total number of processes.
+
+\[
+\text{Average Waiting Time} = \frac{0 + 4 + 6}{3} = 3.33
+\]
+
+### **Average Turnaround Time**:
+To calculate the **average turnaround time**, we sum up the turnaround times of all processes and divide by the total number of processes.
+
+\[
+\text{Average Turnaround Time} = \frac{5 + 7 + 14}{3} = 8.67
+\]
+
+---
+
+### Summary of the Calculations:
+
+1. **Burst Time (BT)**: The time required for a process to complete its execution.
+2. **Arrival Time (AT)**: The time at which a process arrives in the ready queue.
+3. **Completion Time (CT)**: The time at which a process finishes execution.
+4. **Turnaround Time (TAT)**: The total time spent by the process from its arrival to its completion.
+5. **Waiting Time (WT)**: The time spent by a process waiting in the ready queue, excluding its execution time. 
+
+These calculations help in determining the efficiency of different scheduling algorithms and their impact on process performance, including waiting time and turnaround time.
