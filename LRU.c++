@@ -1,45 +1,41 @@
 //LRU
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-void LRU() {
-    vector<int> pages = {7, 6, 1, 9, 9, 8, 2, 3, 0, 4};
-    vector<int> frames(4, -1);
-    int page_faults = 0;
+void lruPageReplacement(vector<int> pages, int frames) {
+    vector<int> memory;
+    int pageFaults = 0;
 
-    cout << "Page\tFrames\n";
     for (int page : pages) {
-        auto it = find(frames.begin(), frames.end(), page);
+        cout << "Requesting page: " << page << endl;
+        auto it = find(memory.begin(), memory.end(), page);
 
-        // If page is not in frames
-        if (it == frames.end()) {
-            // If there's an empty frame, insert there; otherwise, replace using LRU
-            if (find(frames.begin(), frames.end(), -1) != frames.end())
-                *find(frames.begin(), frames.end(), -1) = page;
-            else {
-                vector<int> temp(frames.size(), 0);
-
-                for (int k = pages.size() - 1, count = 0; count < frames.size(); count++, k--)
-                    if (auto it = find(frames.begin(), frames.end(), pages[k]); it != frames.end())
-                        temp[it - frames.begin()] = 1;
-
-                frames[find(temp.begin(), temp.end(), 0) - temp.begin()] = page;
+        if (it == memory.end()) {  // Page fault
+            if (memory.size() < frames) {
+                memory.push_back(page);
+            } else {
+                memory.erase(memory.begin());  // Remove the least recently used page
+                memory.push_back(page);
             }
-            page_faults++;
+            pageFaults++;
+        } else {
+            memory.erase(it);  // Remove the page from its current position
+            memory.push_back(page);  // Move it to the most recent position
         }
 
-        // Display current frames
-        cout << page << "\t";
-        for (int frame : frames) cout << (frame == -1 ? "-\t" : to_string(frame) + "\t");
-        cout << "\n";
+        cout << "Memory: ";
+        for (int m : memory) cout << m << " ";
+        cout << endl;
     }
-
-    cout << "Total Page Faults:\t" << page_faults << endl;
+    cout << "Total Page Faults: " << pageFaults << endl;
 }
 
 int main() {
-    LRU();
+    vector<int> pages = {7, 6, 1, 9, 9, 8, 2, 3, 0, 4};
+    int frames = 4;
+    lruPageReplacement(pages, frames);
     return 0;
 }
