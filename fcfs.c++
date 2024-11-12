@@ -1,4 +1,3 @@
-//fcfs
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -19,7 +18,17 @@ void findAvgTime(const vector<int>& bt) {
 }
 
 int main() {
-    findAvgTime({10, 5, 8, 7, 3});
+    int n;
+    cout << "Enter the number of processes: ";
+    cin >> n;
+
+    vector<int> bt(n);
+    cout << "Enter the burst times for each process:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Process " << i + 1 << " burst time: ";
+        cin >> bt[i];
+    }
+
+    findAvgTime(bt);
     return 0;
 }
-10
