@@ -1,0 +1,130 @@
+oral 
+
+### 1. **Page Replacement Algorithms**
+
+Page replacement algorithms are used in operating systems to manage the contents of the **page table** when a **page fault** occurs (when a process tries to access a page that is not in physical memory). The goal of these algorithms is to decide which page in memory should be replaced when a new page needs to be loaded into memory.
+
+#### a) **FIFO (First-In-First-Out) Page Replacement**
+
+- **Description**: FIFO is the simplest page replacement algorithm. It replaces the oldest page (the one that has been in memory the longest) when a new page needs to be loaded.
+  
+- **How It Works**:
+  - The operating system maintains a queue of pages in memory.
+  - When a new page needs to be loaded into memory, the page at the front of the queue (the oldest) is selected for replacement.
+  - After replacing the page, the new page is added to the back of the queue.
+
+- **Advantages**:
+  - Simple and easy to implement.
+
+- **Disadvantages**:
+  - **Belady's Anomaly**: FIFO may not always produce the optimal result, and it can sometimes cause more page faults than other algorithms, particularly in some cases where adding a new page increases the number of page faults.
+
+#### b) **LRU (Least Recently Used) Page Replacement**
+
+- **Description**: LRU replaces the page that has not been used for the longest period of time.
+  
+- **How It Works**:
+  - The operating system keeps track of the order in which pages were last accessed.
+  - When a page fault occurs, the page that has not been used for the longest time is replaced.
+  - LRU can be implemented using a **stack** or a **queue**, where pages are ordered based on their recent usage.
+  
+- **Advantages**:
+  - More efficient than FIFO because it tends to replace the page that is least likely to be used again soon.
+
+- **Disadvantages**:
+  - Implementing LRU can be complex, especially in hardware or without support from the operating system.
+  - It requires maintaining a record of the access history of pages, which can be memory-intensive.
+
+#### c) **Optimal Page Replacement**
+
+- **Description**: The optimal page replacement algorithm replaces the page that will not be used for the longest time in the future.
+  
+- **How It Works**:
+  - The operating system looks ahead in the reference string (the sequence of page accesses) and selects the page that is farthest in the future for replacement.
+  
+- **Advantages**:
+  - **Optimal** in terms of minimizing the number of page faults.
+  
+- **Disadvantages**:
+  - It requires knowing the future page accesses, which is not possible in most real-world scenarios.
+  - The algorithm is theoretical and not feasible to implement in practice.
+
+---
+
+### 2. **CPU Scheduling Algorithms**
+
+CPU scheduling algorithms determine the order in which processes are given access to the CPU for execution. The primary goal is to maximize the efficiency and fairness of CPU utilization, while ensuring that processes complete their tasks in a timely manner.
+
+#### a) **Priority Scheduling**
+
+- **Description**: Priority scheduling assigns a priority level to each process. The CPU scheduler selects the process with the highest priority (or lowest numerical value if priorities are numeric) for execution.
+  
+- **How It Works**:
+  - Each process is assigned a priority value, and the scheduler picks the process with the highest priority (numerically the lowest value).
+  - If two processes have the same priority, they may be scheduled using a **secondary scheduling algorithm** (like FCFS or RR).
+  
+- **Advantages**:
+  - Important processes can be prioritized to improve responsiveness.
+  
+- **Disadvantages**:
+  - **Starvation**: Low-priority processes may never get executed if high-priority processes keep arriving.
+  - The priority assignment may not always reflect the process’s importance.
+
+#### b) **Round Robin (RR) Scheduling**
+
+- **Description**: Round Robin scheduling is a **preemptive** scheduling algorithm where each process is assigned a fixed time slice or quantum. The CPU scheduler cycles through the processes, allocating the CPU to each process for the duration of the time quantum.
+  
+- **How It Works**:
+  - The scheduler maintains a **queue** of ready processes.
+  - Each process gets the CPU for a fixed time quantum (e.g., 100 ms).
+  - If a process does not complete within the quantum, it is preempted and moved to the back of the queue, and the next process gets its turn.
+  
+- **Advantages**:
+  - Fair for all processes since each gets an equal amount of CPU time.
+  - Suitable for time-sharing systems.
+  
+- **Disadvantages**:
+  - The choice of **time quantum** is critical; if it's too large, RR behaves like FCFS, and if it's too small, there can be too many context switches.
+
+#### c) **Shortest Job First (SJF)**
+
+- **Description**: SJF is a non-preemptive algorithm that schedules processes with the shortest burst time (the shortest CPU execution time) first.
+  
+- **How It Works**:
+  - The scheduler selects the process with the shortest CPU burst time (time it needs to execute) from the ready queue.
+  - SJF minimizes the average waiting time because shorter processes finish quickly, allowing other processes to execute sooner.
+  
+- **Advantages**:
+  - Optimizes the average waiting time.
+  
+- **Disadvantages**:
+  - **Starvation**: Long processes may never get executed if there are always shorter processes ready to execute.
+  - Predicting burst times is difficult.
+
+#### d) **First-Come, First-Served (FCFS)**
+
+- **Description**: FCFS is the simplest CPU scheduling algorithm where processes are executed in the order they arrive in the ready queue.
+  
+- **How It Works**:
+  - The first process to arrive is executed first, and when it completes, the next process in the queue is selected, and so on.
+  
+- **Advantages**:
+  - Simple and easy to implement.
+  
+- **Disadvantages**:
+  - It can lead to **convoy effect**, where short processes have to wait for long processes to finish, leading to poor average waiting time.
+  - It does not guarantee the best CPU utilization or average waiting time.
+
+---
+
+### Summary
+
+**Page Replacement Algorithms** help in managing the **physical memory** by deciding which page to swap out when new pages need to be loaded. Common algorithms include FIFO, LRU, and Optimal, each with its own advantages and disadvantages.
+
+**CPU Scheduling Algorithms** decide how processes will share the CPU. Key algorithms include:
+- **Priority Scheduling** (selects processes based on priority),
+- **Round Robin** (assigns equal time slices to all processes),
+- **Shortest Job First (SJF)** (selects the shortest process for execution),
+- **First-Come, First-Served (FCFS)** (executes processes in the order they arrive).
+
+Each algorithm has specific use cases and trade-offs, with the choice depending on the system requirements, like fairness, efficiency, and responsiveness.
